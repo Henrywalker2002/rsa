@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 
 from Math import Math
-from rsa import RSA
+from rsa import RSA, Public_key
 
 class unittest(unittest.TestCase):
     
