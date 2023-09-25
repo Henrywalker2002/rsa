@@ -1,5 +1,5 @@
 from Math import Math
-
+import math
 
 class Private_key:
 
@@ -28,9 +28,15 @@ class RSA:
         self.public_key = Public_key(e, n)
 
     def encode(self, plain_text):
+        arr = bytes(plain_text, "utf-8")
+        int_val = int.from_bytes(arr, 'big')
         key = self.public_key
-        return [pow(ord(x), key.e, key.n) for x in plain_text]
+        encrypt = Math.mod_pow(int_val, key.e, key.n)
+        return encrypt.to_bytes(int(encrypt.bit_length()  / 8) + 1, "big")
 
     def decode(self, cipher_text):
         key = self.private_key
-        return ''.join([(chr(pow(x, key.d, key.n))) for x in cipher_text])
+        int_val = int.from_bytes(cipher_text, 'big')
+        decrypt = Math.mod_pow(int_val, key.d, key.n)
+        byte = decrypt.to_bytes(int(decrypt.bit_length() / 8) + 1, "big")
+        return byte.decode("utf-8")

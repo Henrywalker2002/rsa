@@ -1,35 +1,27 @@
-import string
-
-import gmpy2
 import random
 
 
 class Math:
-    """
-    check x is prime number or not using Miller-Rabin algorithm
-    """
 
-    # @staticmethod
-    # def isPrime(number: int):
-    #     q = number - 1
-    #     k = 0
-    #     while q % 2 == 0:
-    #         k += 1
-    #         q = int(q / 2)
-    #     for i in range(50):
-    #         a = random.randint(2, number - 2)
-    #         x = pow(a, q, number)
-    #         if x == 1 or x == number - 1:
-    #             return False
-    #         for j in range(k):
-    #             x = pow(x, 2, number)
-    #             if x == number - 1:
-    #                 return False
-    #     return True
+    @staticmethod
+    def mod_pow(base, e, m = None):
+        res = 1
+        
+        while e > 0:
+            
+            if e % 2 != 0:
+                res = res * base % m if m else res * base
+            
+            e = e >> 1 # e = e /2 
+            base = base * base % m if m else base * base
+        
+        return res % m if m else res
     
     @staticmethod
     def isPrime(n, k = 50):
-
+        """
+        check x is prime number or not using Miller-Rabin algorithm
+        """
         if n == 2:
             return True
 
@@ -42,11 +34,11 @@ class Math:
             s //= 2
         for _ in range(k):
             a = random.randrange(2, n - 1)
-            x = pow(a, s, n)
+            x = Math.mod_pow(a, s, n)
             if x == 1 or x == n - 1:
                 continue
             for _ in range(r - 1):
-                x = pow(x, 2, n)
+                x = Math.mod_pow(x, 2, n)
                 if x == n - 1:
                     break
             else:
@@ -60,7 +52,7 @@ class Math:
             a: int = random.randint(1, 100)
             binary_string += str(a % 2)
         binary_string += '1'
-        num: int = int(gmpy2.mpz(binary_string, base=2))
+        num: int = int(binary_string, 2)
         if Math.isPrime(num):
             return num
         else:
@@ -85,7 +77,7 @@ class Math:
 
     # Euclid extend
     @staticmethod
-    def euclid_extend(e: int, m: int, dore: string) -> int:
+    def euclid_extend(e: int, m: int, dore: str) -> int:
         x0, x1 = 1, 0
         y0, y1 = 0, 1
         q = int(m / e)
@@ -114,13 +106,14 @@ class Math:
             else:
                 return False
 
-    """
-    pick e, 1 < e < m which m = (p -1)(q-1)
-    """
+
     @staticmethod
     def find_e(m: int) -> int:
+        """
+        pick e, 1 < e < m which m = (p -1)(q-1)
+        """
         a = []
-        min, max = random.uniform(pow(10, -10), 1/3), random.uniform(2/3, 1)
+        min, max = random.uniform(0.000001, 1/3), random.uniform(2/3, 1)
         for i in range(int(m*min), int(m*max)):
             if Math.gcd(m, i) == 1:
                 a.append(i)
@@ -128,9 +121,9 @@ class Math:
                 break
         return a[random.randint(0, len(a) - 1)]
 
-    """
-    e * d = 1 (mod m)
-    """
     @staticmethod
     def find_d(e: int, m: int) -> int:
+        """
+        e * d = 1 (mod m)
+        """
         return (m + Math.euclid_extend(e, m, 'd')) % m 

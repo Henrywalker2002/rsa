@@ -29,20 +29,3 @@ class unittest(unittest.TestCase):
         cipher = rsa.encode("hello")
         self.assertEqual(rsa.decode(cipher), "hello")
         
-    def test_rsa_encode(self):
-        rsa = mock.Mock()
-        public_key = mock.Mock()
-        public_key.e = 7
-        public_key.n = 187
-        rsa.public_key = public_key
-        self.assertEqual(RSA.encode(rsa, 'X'), [11])
-
-    def test_rsa_decode(self):
-        rsa = mock.Mock()
-        
-        private_key = mock.Mock()
-        private_key.d = 23
-        private_key.n = 187
-        rsa.private_key = private_key
-        
-        self.assertEqual(RSA.decode(rsa, [11]), 'X')
