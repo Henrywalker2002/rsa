@@ -9,26 +9,52 @@ class Math:
     check x is prime number or not using Miller-Rabin algorithm
     """
 
+    # @staticmethod
+    # def isPrime(number: int):
+    #     q = number - 1
+    #     k = 0
+    #     while q % 2 == 0:
+    #         k += 1
+    #         q = int(q / 2)
+    #     for i in range(50):
+    #         a = random.randint(2, number - 2)
+    #         x = pow(a, q, number)
+    #         if x == 1 or x == number - 1:
+    #             return False
+    #         for j in range(k):
+    #             x = pow(x, 2, number)
+    #             if x == number - 1:
+    #                 return False
+    #     return True
+    
     @staticmethod
-    def isPrime(number: int):
-        q = number - 1
-        k = 0
-        while q % 2 == 0:
-            k += 1
-            q = q / 2
-        for i in range(50):
-            a = random.randint(2, number - 2)
-            x = pow(a, q, number)
-            if x == 1 or x == number - 1:
+    def isPrime(n, k = 50):
+
+        if n == 2:
+            return True
+
+        if n % 2 == 0:
+            return False
+
+        r, s = 0, n - 1
+        while s % 2 == 0:
+            r += 1
+            s //= 2
+        for _ in range(k):
+            a = random.randrange(2, n - 1)
+            x = pow(a, s, n)
+            if x == 1 or x == n - 1:
+                continue
+            for _ in range(r - 1):
+                x = pow(x, 2, n)
+                if x == n - 1:
+                    break
+            else:
                 return False
-            for j in range(k):
-                x = pow(x, 2, number)
-                if x == number - 1:
-                    return False
         return True
 
     @staticmethod
-    def getRandomNumber(bit_length: int):
+    def getRandomNumber(bit_length: int = 500):
         binary_string = '1'
         for x in range(bit_length - 2):
             a: int = random.randint(1, 100)
@@ -38,22 +64,24 @@ class Math:
         if Math.isPrime(num):
             return num
         else:
-            Math.getRandomNumber(bit_length)
+            return Math.getRandomNumber(bit_length)
 
     @staticmethod
     def gcd(a: int, b: int) -> int:
-        pass
-
-    """
-    find two number p and q which have bit larger than min_number_of_bit
-    res must return pair (p,q)
-    """
+        if a == 0:
+            return b
+    
+        return Math.gcd(b % a, a)
 
     @staticmethod
     def find_p_and_q(min_number_of_bit=500) -> int:
+        """
+        find two number p and q which have bit larger than min_number_of_bit
+        res must return pair (p,q)
+        """
         p: int = Math.getRandomNumber(min_number_of_bit)
         q: int = Math.getRandomNumber(min_number_of_bit)
-        return p
+        return (p,q)
 
     # Euclid extend
     @staticmethod
@@ -89,17 +117,20 @@ class Math:
     """
     pick e, 1 < e < m which m = (p -1)(q-1)
     """
-
     @staticmethod
     def find_e(m: int) -> int:
-        for i in range(m):
-            if Math.euclid_extend(m, i, 'e') == 1:
-                return i
+        a = []
+        min, max = random.uniform(pow(10, -10), 1/3), random.uniform(2/3, 1)
+        for i in range(int(m*min), int(m*max)):
+            if Math.gcd(m, i) == 1:
+                a.append(i)
+            if len(a) == 50:
+                break
+        return a[random.randint(0, len(a) - 1)]
 
     """
     e * d = 1 (mod m)
     """
-
     @staticmethod
     def find_d(e: int, m: int) -> int:
-        return m + Math.euclid_extend(e, m, 'd')
+        return (m + Math.euclid_extend(e, m, 'd')) % m 
