@@ -44,9 +44,28 @@ class Math:
             else:
                 return False
         return True
-
+    
+    @staticmethod 
+    def generate_strong_prime_number(bit_length : int = 512):
+        s = Math.getRandomPrimeNumber(int(bit_length/2))
+        t = Math.getRandomPrimeNumber(int(bit_length/2))
+        
+        count = 1 
+        r = 2 * count * t + 1
+        while not Math.isPrime(r):
+            count += 1 
+            r = 2 * count * t + 1 
+        
+        p0 = 2 * (Math.mod_pow(s, r - 2 , r))*s - 1 
+        count = 1 
+        p = p0 + 2 * count * r *s 
+        while not Math.isPrime(p):
+            count += 1 
+            p = p0 + 2 * count * r *s 
+        return p 
+        
     @staticmethod
-    def getRandomNumber(bit_length: int = 500):
+    def getRandomPrimeNumber(bit_length: int = 500):
         binary_string = '1'
         for x in range(bit_length - 2):
             a: int = random.randint(1, 100)
@@ -56,7 +75,7 @@ class Math:
         if Math.isPrime(num):
             return num
         else:
-            return Math.getRandomNumber(bit_length)
+            return Math.getRandomPrimeNumber(bit_length)
 
     @staticmethod
     def gcd(a: int, b: int) -> int:
