@@ -90,8 +90,8 @@ class Math:
         find two number p and q which have bit larger than min_number_of_bit
         res must return pair (p,q)
         """
-        p: int = Math.getRandomNumber(min_number_of_bit)
-        q: int = Math.getRandomNumber(min_number_of_bit)
+        p: int = Math.getRandomPrimeNumber(min_number_of_bit)
+        q: int = Math.getRandomPrimeNumber(min_number_of_bit)
         return (p,q)
 
     # Euclid extend

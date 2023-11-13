@@ -88,7 +88,7 @@ def gen_decrypt_frame(parent):
 
     res_text = Text(decode_frame, height=10)
 
-    decode_button = Button(decode_frame, text="Choose and decrypt", command=lambda : handle_decode(key.get(), res_text))
+    decode_button = Button(decode_frame, text="Choose file and decrypt", command=lambda : handle_decode(key.get(), res_text))
     decode_button.pack()
 
     Label(decode_frame, text="Result: ", justify="left").pack()
@@ -122,7 +122,7 @@ def gen_encrypt_frame(parent):
     genetate_label = Label(decode_frame, text="Encryption")
     genetate_label.pack()
 
-    Label(decode_frame, text="cipher text: ", justify="left").pack()
+    Label(decode_frame, text="plain text: ", justify="left").pack()
     text = Text(decode_frame, height=10)
     text.pack()
 
@@ -132,7 +132,7 @@ def gen_encrypt_frame(parent):
     decode_button = Button(decode_frame, text="Encrypt", command=lambda : handle_encode(key.get(), text.get('1.0', 'end')))
     decode_button.pack()
 
-    Label(decode_frame, text="Result: ", justify="left").pack()
+    # Label(decode_frame, text="Result: ", justify="left").pack()
 
     decode_frame.pack()
     return decrypt_frame
