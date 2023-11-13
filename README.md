@@ -1,5 +1,6 @@
 # install 
 require python 3.x
+
 use command ```pip install -r requirements.txt ``` to install tkinter (library for use UI)
 
 # how to use software 
