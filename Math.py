@@ -85,13 +85,13 @@ class Math:
         return Math.gcd(b % a, a)
 
     @staticmethod
-    def find_p_and_q(min_number_of_bit=500) -> int:
+    def find_p_and_q(min_number_of_bit=512) -> int:
         """
         find two number p and q which have bit larger than min_number_of_bit
         res must return pair (p,q)
         """
-        p: int = Math.getRandomPrimeNumber(min_number_of_bit)
-        q: int = Math.getRandomPrimeNumber(min_number_of_bit)
+        p: int = Math.generate_strong_prime_number(min_number_of_bit)
+        q: int = Math.generate_strong_prime_number(min_number_of_bit)
         return (p,q)
 
     # Euclid extend
@@ -99,7 +99,7 @@ class Math:
     def euclid_extend(e: int, m: int, dore: str) -> int:
         x0, x1 = 1, 0
         y0, y1 = 0, 1
-        q = int(m / e)
+        q = int(m // e)
         r = m % e
         x = x0 - x1 * q
         y = y0 - y1 * q
@@ -116,7 +116,7 @@ class Math:
             m = e
             e = r
             r = m % e
-            q = int(m / e)
+            q = int(m // e)
         if dore == 'd':
             return y
         else:
@@ -132,10 +132,10 @@ class Math:
         pick e, 1 < e < m which m = (p -1)(q-1)
         """
         a = []
-        min, max = random.uniform(0.000001, 1/3), random.uniform(2/3, 1)
-        for i in range(int(m*min), int(m*max)):
+        # min, max = random.uniform(0.000001, 1/3), random.uniform(2/3, 1)
+        for i in range( m // 3, m):
             if Math.gcd(m, i) == 1:
-                a.append(i)
+                a.append(i) 
             if len(a) == 50:
                 break
         return a[random.randint(0, len(a) - 1)]

@@ -20,6 +20,8 @@ def show_frame(frame):
 def gen_key(private_key_text, public_key_text):
     global rsa 
     rsa = RSA()
+    public_key_text.delete('1.0', END)
+    private_key_text.delete('1.0', END)
     public_key_text.insert(INSERT, rsa.get_public_key_str())
     private_key_text.insert(INSERT, rsa.get_private_key_str())
     
