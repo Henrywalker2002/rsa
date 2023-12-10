@@ -92,6 +92,9 @@ class Math:
         """
         p: int = Math.generate_strong_prime_number(min_number_of_bit)
         q: int = Math.generate_strong_prime_number(min_number_of_bit)
+
+        # p: int = Math.getRandomPrimeNumber(min_number_of_bit)
+        # q: int = Math.getRandomPrimeNumber(min_number_of_bit)
         return (p,q)
 
     # Euclid extend
